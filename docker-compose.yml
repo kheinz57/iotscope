@@ -6,7 +6,7 @@ services:
 
   influxdb:
     container_name: influxdb
-    image: influxdb
+    image: hypriot/rpi-influxdb
     ports:
       - "8086:8086"
     volumes:
@@ -20,10 +20,11 @@ services:
     user: "0"
     ports:
       - "1883:1883"
-      #- "9001:9001"
+      - "9001:9001"
     volumes:
       - ./conf/mqtt/:/mosquitto/config/
       - ./data/mqtt/:/mosquitto/data/
+      - ./log/mqtt/:/mosquitto/log/
     restart: always
 
   grafana:    
