@@ -1,0 +1,44 @@
+version: "2"
+services:
+  app:
+    container_name: app
+    build: ./app
+
+  influxdb:
+    container_name: influxdb
+    image: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb
+      - ./conf/influxdb:/etc/influxdb/
+    #restart: always
+
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto:latest
+    user: "0"
+    ports:
+      - "1883:1883"
+      #- "9001:9001"
+    volumes:
+      - ./conf/mqtt/:/mosquitto/config/
+      - ./data/mqtt/:/mosquitto/data/
+    restart: always
+
+  grafana:    
+    container_name: grafana    
+    image: grafana/grafana    
+    user: "0"    
+    ports:      
+      - "3000:3000"    
+    environment:      
+      #- GF_SERVER_ROOT_URL=https://gug.nemme.de/grafana/      
+      - GF_SECURITY_ADMIN_USER=admin      
+      - GF_SECURITY_ADMIN_PASSWORD=iotscope    
+    volumes:      
+      - ./data/grafana:/var/lib/grafana      
+    links:      
+      - influxdb    
+    restart: always
+
