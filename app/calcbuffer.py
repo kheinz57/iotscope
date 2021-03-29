@@ -9,8 +9,7 @@ import json
 MQTT_ADDRESS = 'mqtt'
 MQTT_USER = ''
 MQTT_PASSWORD = ''
-MQTT_TOPIC = '/hoizung/#'  
-#MQTT_REGEX = 'hoizung/([^/]+)/([^/]+)'
+MQTT_TOPIC = '/#'  
 MQTT_CLIENT_ID = ''
 
 def on_connect(client, userdata, flags, rc):
