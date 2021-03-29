@@ -1,8 +1,20 @@
-version: "2"
+version: "2.1"
 services:
+  gluecode:
+    container_name: gluecode
+    build: ./gluecode
+    links:      
+      - influxdb
+      - mqtt
+    restart: always
+
   app:
     container_name: app
     build: ./app
+    privileged: true
+    links:
+      - mqtt
+    restart: always
 
   influxdb:
     container_name: influxdb
